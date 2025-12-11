@@ -8,8 +8,38 @@ git push origin main
 
 # create file .gitignore
 
-node_modules/
+node*modules/
 build/
 .env
-_.log
-_.tmp
+*.log
+\_.tmp
+
+# create file .env
+
+NODE_ENV=development
+APP_PORT=4004
+
+## Database configuration
+
+DB_USERNAME=postgres
+DB_PASS=123456
+DB_NAME=db_clinic
+DB_HOST=localhost
+DB_PORT=5432
+
+# create file .sequelizerc
+
+npm i sequelize pg pg-hstore --save
+npm i sequelize-cli --save-dev
+npx sequelize-cli init
+
+// .sequelizerc
+
+const path = require('path');
+
+module.exports = {
+config: path.resolve('config', 'config.js'),
+'models-path': path.resolve('db', 'models'),
+'seeders-path': path.resolve('db', 'seeders'),
+'migrations-path': path.resolve('db', 'migrations'),
+};
