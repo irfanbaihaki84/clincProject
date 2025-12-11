@@ -1,2 +1,3 @@
-# clincProject
+# clinicProject
+
 javascript, postgresql

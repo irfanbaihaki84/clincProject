@@ -1,1 +1,7 @@
-git pull origin main <source>
+# github user guide
+
+git clone <source>
+git status
+git add .
+git commit -M "comments"
+git push origin main
