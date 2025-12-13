@@ -8,8 +8,14 @@ git push origin main
 
 # node_modules installation
 
-npm install express dotenv sequelize pg pg-hstore --save
+npm install express dotenv sequelize pg pg-hstore bcrypt jsonwebtoken --save
 npm install nodemon sequelize-cli --save-dev
+
+# edit package.json file
+
+"scripts": {
+    "start:dev": "nodemon app.js"
+  },
 
 # create file .gitignore
 

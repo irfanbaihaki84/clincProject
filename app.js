@@ -15,12 +15,24 @@ app.get('/', (req, res) => {
 
 // all routes will be here
 const authRoute = require('./route/authRoute');
+const catchAsync = require('./utils/catchAsync');
 app.use('/api/v1/auth', authRoute);
 
-app.use((req, res, next) => {
-  res.status(404).json({
-    status: 'fail',
-    message: 'Route not found',
+app.use(
+  catchAsync(async (req, res, next) => {
+    res.status(404).json({
+      status: 'fail',
+      message: 'Route not found',
+    });
+  })
+);
+
+// error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    status: 'error',
+    message: err.message,
   });
 });
 

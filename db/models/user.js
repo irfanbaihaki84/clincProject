@@ -1,5 +1,6 @@
 'use strict';
-const { Model, Sequelize } = require('sequelize');
+const { Model, Sequelize, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 const sequelize = require('../../config/database');
 
 module.exports = sequelize.define(
@@ -9,42 +10,52 @@ module.exports = sequelize.define(
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
     },
     nik: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
     },
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     userType: {
-      type: Sequelize.ENUM('0', '1', '2'),
+      type: DataTypes.ENUM('0', '1', '2'),
     },
     userName: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
+    },
+    confirmPassword: {
+      type: DataTypes.VIRTUAL,
+      set(value) {
+        if (value !== this.password) {
+          throw new Error('Password confirmation does not match password');
+        }
+        const hashPassword = bcrypt.hashSync(this.password, 10);
+        this.setDataValue('password', hashPassword);
+      },
     },
     status: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     createdAt: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
     updatedAt: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
     deletedAt: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
   },
   {
